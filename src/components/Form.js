@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 const Form = () => {
@@ -7,15 +8,22 @@ const Form = () => {
 
     const submitData = async ()=>{
         const data = {
-            userName,
-            userEmail,
+            name: userName,
+            email: userEmail,
         }
-        
+
+        const res = await axios.post('/createuser', data);
+        console.log(res);
+
     }
 
     const handleSubmit = (e)=>{
         e.preventDefault();
+        submitData();
+        setUserName("");
+        setUserEmail("");
     }
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -37,6 +45,8 @@ const Form = () => {
                   Name
                 </label>
                 <input
+                  value={userName}
+                  onChange={(e)=>setUserName(e.target.value)}
                   type="text"
                   id="name"
                   name="name"
@@ -53,6 +63,8 @@ const Form = () => {
                   Email
                 </label>
                 <input
+                  value={userEmail}
+                  onChange={(e)=>setUserEmail(e.target.value)}
                   type="email"
                   id="email"
                   name="email"
